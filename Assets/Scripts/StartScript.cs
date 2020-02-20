@@ -6,10 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class StartScript : MonoBehaviour
 {
-    public int[] questionsSequence;
-    public int stopper;
+    public DataForAllProject data;
+    int[] questionsSequence;
+    int stopper;
 
-    public Text testText;
+    //public Text testText;
 
     public int questionsCount;
     public int allQuestionsCount;
@@ -23,9 +24,10 @@ public class StartScript : MonoBehaviour
 
     public void StartGame()
     {
+        questionsSequence = new int[questionsCount];
         Ramdomizator();
-        Game.questions = questionsSequence;
-        SceneManager.LoadScene(questionsSequence[0]);
+        data.questions = questionsSequence;
+        SceneManager.LoadScene(1);
     }
 
     public void QuitGame()
@@ -41,7 +43,7 @@ public class StartScript : MonoBehaviour
         }
         int factor = mathFact(allQuestionsCount, questionsCount);
         stopper = Random.Range(0, factor);
-        testText.text = stopper.ToString();
+       // testText.text = stopper.ToString();
         while (stopper > 0)
         {   
             
