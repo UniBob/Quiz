@@ -865,10 +865,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05b1a718604dc524b920a41a47277541, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  questionsSequence: 00000000000000000000000000000000
+  questionsSequence: 0000000000000000000000000000000000000000
   stopper: 0
   testText: {fileID: 130614502}
-  questionsCount: 4
+  questionsCount: 5
   allQuestionsCount: 10
 --- !u!1 &1543947302
 GameObject:

@@ -39,36 +39,24 @@ public class StartScript : MonoBehaviour
         {
             questionsSequence[i] = i;
         }
-        int factorial = mathFact(allQuestionsCount, questionsCount);
-        stopper = Random.Range(0, factorial);
-        Debug.Log(factorial.ToString());
+        int factor = mathFact(allQuestionsCount, questionsCount);
+        stopper = Random.Range(0, factor);
         testText.text = stopper.ToString();
-        int flagJ = 0;
         while (stopper > 0)
-        {           
+        {   
+            
             stopper--;
-            flagJ++;
             questionsSequence[questionsCount - 1]++;
+
             for (int i = questionsCount - 1; i > -1; i--) 
             {
-                if ((i == 0) && (questionsSequence[0] == allQuestionsCount))
+                if (questionsSequence[i] >= allQuestionsCount)
                 {
-                    break;
+                    questionsSequence[i] %= allQuestionsCount;
+                    questionsSequence[i - 1]++;
                 }
-                else
-                    if (questionsSequence[i] >= allQuestionsCount) 
-                    {
-                        questionsSequence[i] %= allQuestionsCount;
-                        questionsSequence[i - 1]++;
-                    }
-                    else
-                    {
-                        break;
-                    }
             }
         }
-        Debug.Log(flagJ.ToString());
-
     }
 
     int mathFact(int n, int k)
@@ -78,8 +66,16 @@ public class StartScript : MonoBehaviour
         {
             answer *= i;
             if (i <= k) answer /= i;
-            if (i <= (n - k)) answer /= i;
-        }       
-        return (int)answer;
+            //if (i <= (n - k)) answer /= i;
+        }
+        //Debug.Log(answer.ToString());
+        if (answer > int.MaxValue)
+        {
+            return int.MaxValue;
+        }
+        else
+        {
+            return (int)answer;
+        }
     }
 }
