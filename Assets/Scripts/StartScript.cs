@@ -3,33 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
+//using System;
 
 public class StartScript : MonoBehaviour
 {
     public DataForAllProject data;
-    int[] questionsSequence;
+    List<int> questionsSequence = new List<int>();
     int stopper;
-
-    //public Text testText;
-
-    public int questionsCount;
-    public int allQuestionsCount;
-
-
+    int questionsCount;
+    int allQuestionsCount;
+  
     public void Test ()
     {
         Ramdomizator();
-       // testText.text = stopper.ToString();
     }
 
     public void StartGame()
     {
-        questionsSequence = new int[questionsCount];
+        questionsCount = data.count;
+        allQuestionsCount = data.countOfAll;
         Ramdomizator();
-        data.questions = questionsSequence;
+        data.questionsSequence = questionsSequence;
         SceneManager.LoadScene(1);
     }
 
+   
     public void QuitGame()
     {
         Application.Quit();
@@ -37,28 +36,44 @@ public class StartScript : MonoBehaviour
 
     void Ramdomizator()
     {
-        for (int i = 0; i < questionsCount; i++) 
-        {
-            questionsSequence[i] = i;
-        }
-        int factor = mathFact(allQuestionsCount, questionsCount);
-        stopper = Random.Range(0, factor);
-       // testText.text = stopper.ToString();
-        while (stopper > 0)
-        {   
-            
-            stopper--;
-            questionsSequence[questionsCount - 1]++;
+        for (int i = 0; i < questionsCount; i++)
+            questionsSequence.Add(i);
 
-            for (int i = questionsCount - 1; i > -1; i--) 
-            {
-                if (questionsSequence[i] >= allQuestionsCount)
-                {
-                    questionsSequence[i] %= allQuestionsCount;
-                    questionsSequence[i - 1]++;
-                }
-            }
-        }
+        questionsSequence = questionsSequence.OrderBy((item) => Random.value).ToList();
+        data.questions = data.questions.OrderBy((item) => Random.value).ToList();
+
+
+        //System.Random rnd = new System.Random();
+        //for (int i = 0; i < questionsCount; i++) 
+        //{
+        //    bool tmp = true;
+        //    var tmpInt = new int();
+        //    while(tmp)
+        //    {
+        //        tmp = false;
+        //        tmpInt = rnd.Next(allQuestionsCount);
+        //        foreach(int j in questionsSequence)
+        //        {
+        //            if (j == tmpInt) tmp = true;
+        //        }
+        //    }
+        //    questionsSequence.Add(tmpInt);
+        //}
+        //int factor = mathFact(allQuestionsCount, questionsCount);
+        //stopper = UnityEngine.Random.Range(0, factor);
+        
+        //while (stopper > 0)
+        //{               
+        //    stopper--;
+        //    for (int i = questionsCount - 1; i >= 0; i--)
+        //        if (questionsSequence[i] < allQuestionsCount - questionsCount + i)
+        //        {
+        //            questionsSequence[i]++;
+        //            for (int j = i + 1; j < questionsCount; j++)
+        //                questionsSequence[j] = questionsSequence[j - 1] + 1;
+        //        }
+        //        else break;
+        //}
     }
 
     int mathFact(int n, int k)
@@ -68,7 +83,7 @@ public class StartScript : MonoBehaviour
         {
             answer *= i;
             if (i <= k) answer /= i;
-            //if (i <= (n - k)) answer /= i;
+            if (i <= (n - k)) answer /= i;
         }
         //Debug.Log(answer.ToString());
         if (answer > int.MaxValue)

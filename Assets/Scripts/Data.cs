@@ -5,7 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Data")]
 public class Data : ScriptableObject
 {
-    public string questionText;
+    [TextArea(minLines: 1, maxLines: 10)] public string questionText;
     public string[] answers = new string[4];
     public int rightAnswer;
+    public int[] answerFontSize = new int[4];
 }
