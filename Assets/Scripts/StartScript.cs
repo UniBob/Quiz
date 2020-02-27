@@ -10,13 +10,26 @@ public class StartScript : MonoBehaviour
 {
     public DataForAllProject data;
     List<int> questionsSequence = new List<int>();
-    int stopper;
     int questionsCount;
     int allQuestionsCount;
+
+    public Text startText;
   
-    public void Test ()
+    public void Start ()
     {
-        Ramdomizator();
+        data.countOfAll = data.questions.Count;
+        if ((data.count == 1) || ((data.count > 20) && (data.count % 10 == 1)))
+        {
+            startText.text = "Тебе будет задано " + data.count.ToString() + " вопрос\nНа каждый вопрос даётся 30 секунд\nЗа правильный ответ даётся 10 баллов\nНажав клавишу U можно получить подсказку 50:50\nУдачи!";
+        }
+        if (((data.count > 1) && (data.count < 5)) || ((data.count > 20) && (data.count % 10 > 1) && (data.count % 10 < 5)))
+        {
+            startText.text = "Тебе будет задано " + data.count.ToString() + " вопроса\nНа каждый вопрос даётся 30 секунд\nЗа правильный ответ даётся 10 баллов\nНажав клавишу U можно получить подсказку 50:50\nУдачи!";
+        }
+        if (((data.count > 4) && (data.count < 21)) || ((data.count > 20) && (data.count % 10 > 4)) || ((data.count > 20) && (data.count % 10 == 0)))
+        {
+            startText.text = "Тебе будет задано " + data.count.ToString() + " вопросов\nНа каждый вопрос даётся 30 секунд\nЗа правильный ответ даётся 10 баллов\nНажав клавишу U можно получить подсказку 50:50\nУдачи!";
+        }
     }
 
     public void StartGame()
@@ -40,40 +53,7 @@ public class StartScript : MonoBehaviour
             questionsSequence.Add(i);
 
         questionsSequence = questionsSequence.OrderBy((item) => Random.value).ToList();
-        data.questions = data.questions.OrderBy((item) => Random.value).ToList();
-
-
-        //System.Random rnd = new System.Random();
-        //for (int i = 0; i < questionsCount; i++) 
-        //{
-        //    bool tmp = true;
-        //    var tmpInt = new int();
-        //    while(tmp)
-        //    {
-        //        tmp = false;
-        //        tmpInt = rnd.Next(allQuestionsCount);
-        //        foreach(int j in questionsSequence)
-        //        {
-        //            if (j == tmpInt) tmp = true;
-        //        }
-        //    }
-        //    questionsSequence.Add(tmpInt);
-        //}
-        //int factor = mathFact(allQuestionsCount, questionsCount);
-        //stopper = UnityEngine.Random.Range(0, factor);
-        
-        //while (stopper > 0)
-        //{               
-        //    stopper--;
-        //    for (int i = questionsCount - 1; i >= 0; i--)
-        //        if (questionsSequence[i] < allQuestionsCount - questionsCount + i)
-        //        {
-        //            questionsSequence[i]++;
-        //            for (int j = i + 1; j < questionsCount; j++)
-        //                questionsSequence[j] = questionsSequence[j - 1] + 1;
-        //        }
-        //        else break;
-        //}
+        data.questions = data.questions.OrderBy((item) => Random.value).ToList();       
     }
 
     int mathFact(int n, int k)

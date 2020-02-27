@@ -11,11 +11,18 @@ public class Game : MonoBehaviour
 
     public Image answer;
 
+    public Text timerText;
+    string beginningOfTimer = "Осталось ";
+    string endingOfTimer = " секунд";
+    int timer;
+    bool isTimerStarted = true;
+
     public Text questText;
     public Text scoreText;
     public Button[] buttons = new Button[4];
     bool deleteVariants = false;
     int rightVariant = 0;
+
     public void Start()
     {
         
@@ -25,8 +32,10 @@ public class Game : MonoBehaviour
         
     }
 
+    
     public void buttonClick(int i)
     {
+        isTimerStarted = false;
         if (rightVariant == i)
         {
             RightAnswer();
@@ -54,6 +63,15 @@ public class Game : MonoBehaviour
         answer.GetComponentInChildren<Text>().text = "WRONG";
     }
 
+    void TimeIsOver()
+    {
+        timerText.text = beginningOfTimer + "0" + endingOfTimer;
+        data.questionNumber++;
+        answer.gameObject.SetActive(true);
+        answer.GetComponentInChildren<Text>().color = Color.red;
+        answer.GetComponentInChildren<Text>().text = "TIME OVER";
+    }
+
     public void UpdateText()
     {        
         if (data.questionNumber >= data.count)
@@ -75,6 +93,8 @@ public class Game : MonoBehaviour
                 buttons[i].GetComponentInChildren<Text>().text = data.questions[data.questionsSequence[data.questionNumber]].answers[i];
             }
             scoreText.text = data.score.ToString();
+            timer = (int)Time.time + 30;
+            isTimerStarted = true;
         }
     }
     public void Update()
@@ -83,6 +103,13 @@ public class Game : MonoBehaviour
         {
             if (!deleteVariants) deleteSomeVariants();
         }
+
+        if ((Time.time > timer)&&(isTimerStarted))
+        {
+            TimeIsOver();
+            isTimerStarted = false;
+        }
+        if (!answer.gameObject.activeSelf) timerText.text = beginningOfTimer + (timer - (int)Time.time).ToString() + endingOfTimer;
     }
 
     void deleteSomeVariants()

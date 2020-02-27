@@ -16,10 +16,10 @@ EditorBuildSettings:
     guid: 2b0c5c787a0c4bc4fba3b0d54065ee49
   - enabled: 0
     path: Assets/Scenes/Main Menu Vertical.unity
-    guid: b78e529b04076c140b1158943d17a560
+    guid: 33d5f5c2ebf2d92449ae7e153fc2599a
   - enabled: 0
     path: Assets/Scenes/Game Vertical.unity
-    guid: eb5fb1bc4a22e7d4ea94861cae55ab28
+    guid: 6d3733779fceac942b368f57299fc8f2
   - enabled: 0
     path: Assets/Scenes/Result Vertical.unity
     guid: f13e9d3227d8c7342829508eb7077653
